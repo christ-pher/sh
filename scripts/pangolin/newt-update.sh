@@ -8,5 +8,5 @@ fi
 
 ${SUDO} systemctl stop newt.service &&
 curl -fsSL https://static.pangolin.net/get-newt.sh | bash &&
-${SUDO} cp .local/bin/newt /usr/local/bin/ &&
+${SUDO} cp ~/.local/bin/newt /usr/local/bin/ &&
 ${SUDO} systemctl start newt.service
