@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-read -p "Url: " endpoint
-read -p "ID: " id
-read -p "Secret: " secret
+read -p "Url: " endpoint &&
+read -p "ID: " id &&
+read -p "Secret: " secret &&
 
 if [[ $EUID -ne 0 ]]; then
    SUDO="sudo"
