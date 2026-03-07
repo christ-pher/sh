@@ -10,6 +10,31 @@ else
    SUDO=""
 fi
 
+if [[ $PWD == "/root" ]]; then
+
+${SUDO} mkdir -p /user/local/bin &&
+curl -fsSL https://static.pangolin.net/get-newt.sh | bash && 
+
+${SUDO} tee /etc/systemd/system/newt.service > /dev/null <<EOF
+[Unit]
+Description=Newt
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/newt --id $id --secret $secret --endpoint $endpoint
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+${SUDO} systemctl daemon-reload &&
+${SUDO} systemctl start newt.service &&
+${SUDO} systemctl enable newt.service
+
+else
+
 ${SUDO} mkdir -p /user/local/bin &&
 curl -fsSL https://static.pangolin.net/get-newt.sh | bash && 
 ${SUDO} cp ~/.local/bin/newt /usr/local/bin/ &&
@@ -31,3 +56,5 @@ EOF
 ${SUDO} systemctl daemon-reload &&
 ${SUDO} systemctl start newt.service &&
 ${SUDO} systemctl enable newt.service
+
+fi
