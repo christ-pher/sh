@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
-sudo systemctl stop newt.service && curl -fsSL https://static.pangolin.net/get-newt.sh | bash && sudo cp .local/bin/newt /usr/local/bin/ && sudo systemctl start newt.service
+if [[ $EUID -ne 0 ]]; then
+   SUDO="sudo"
+else
+   SUDO=""
+fi
+
+${SUDO} systemctl stop newt.service &&
+curl -fsSL https://static.pangolin.net/get-newt.sh | bash &&
+${SUDO} cp .local/bin/newt /usr/local/bin/ &&
+${SUDO} systemctl start newt.service
